@@ -63,6 +63,7 @@ $RECYCLE.BIN/
 # =========================
 *.ipr
 *.iws
+*.iml
 .idea/
 out/production/
 .project
