@@ -5,6 +5,11 @@ public class InvisibleWindow extends JFrame
 {
 	private JLabel label;
 
+	public InvisibleWindow()
+	{
+		this("");
+	}
+
 	public InvisibleWindow(String text)
 	{
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment()
@@ -40,5 +45,23 @@ public class InvisibleWindow extends JFrame
 	public JLabel getLabel()
 	{
 		return label;
+	}
+
+	public void setText(String text)
+	{
+		getLabel().setText(text);
+	}
+
+	public void popup()
+	{
+		setAlwaysOnTop(true);
+		setVisible(true);
+		requestFocus();
+	}
+
+	public void remove()
+	{
+		setAlwaysOnTop(false);
+		setVisible(false);
 	}
 }
