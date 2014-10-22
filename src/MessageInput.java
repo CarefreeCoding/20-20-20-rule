@@ -37,7 +37,7 @@ public class MessageInput extends JPanel
 		return enabled.isSelected();
 	}
 
-	public String getMessage()
+	public String getText()
 	{
 		return message.getText();
 	}
@@ -50,5 +50,10 @@ public class MessageInput extends JPanel
 	public int getDuration()
 	{
 		return Integer.valueOf(String.valueOf(durationSpinner.getValue()));
+	}
+
+	public Message getMessage()
+	{
+		return new Message(getText(), getFrequency(), getDuration());
 	}
 }
