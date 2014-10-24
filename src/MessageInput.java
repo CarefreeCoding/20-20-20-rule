@@ -32,7 +32,7 @@ public class MessageInput extends JPanel
 		enabled.setSelected(true);
 	}
 
-	public boolean isOn()
+	public boolean isEnabled()
 	{
 		return enabled.isSelected();
 	}
@@ -55,5 +55,23 @@ public class MessageInput extends JPanel
 	public Message getMessage()
 	{
 		return new Message(getText(), getFrequency(), getDuration());
+	}
+
+	public void enable()
+	{
+		setEnabled(true);
+	}
+
+	public void disable()
+	{
+		setEnabled(false);
+	}
+
+	public void setEnabled(boolean value)
+	{
+		enabled.setEnabled(value);
+		message.setEnabled(value);
+		frequencySpinner.setEnabled(value);
+		durationSpinner.setEnabled(value);
 	}
 }
