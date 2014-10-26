@@ -1,38 +1,39 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class TimerControl
 {
-	public static final int SECOND = 1000;
-	public static final int MINUTE = SECOND + 60;
-
 	private InvisibleWindow message;
 
 	private LinkedList<Message> queue;
 
-	private Timer counter;
-	private int   time;
+	private ScheduledExecutorService timer;
+	private Runnable                 task;
+
+	private int time;
 
 	public TimerControl()
 	{
 		message = new InvisibleWindow();
-		ActionListener event = new ActionListener()
+
+		task = new Runnable()
 		{
 			@Override
-			public void actionPerformed(ActionEvent e)
+			public void run()
 			{
 				eventAction();
 			}
 		};
-		counter = new Timer(0, event);
+		timer = Executors.newSingleThreadScheduledExecutor();
 	}
 
 	private void eventAction()
 	{
-		stop();
+		stop(true);
 		if (shouldWeDisplay())
 		{
 			displayMessage();
@@ -40,14 +41,6 @@ public class TimerControl
 		else
 		{
 			waitForNextMessage();
-			if (time > queue.peek().getTime())
-			{
-				time = 0;
-			}
-			else
-			{
-				time += counter.getDelay() / MINUTE;
-			}
 		}
 	}
 
@@ -60,7 +53,16 @@ public class TimerControl
 
 	public void stop()
 	{
-		counter.stop();
+		stop(false);
+	}
+
+	private void stop(boolean soft)
+	{
+		if (!soft)
+		{
+			timer.shutdownNow();
+			timer = Executors.newSingleThreadScheduledExecutor();
+		}
 		SwingUtilities.invokeLater(new Runnable()
 		{
 			@Override
@@ -76,8 +78,6 @@ public class TimerControl
 		// get the message we will display
 		Message msg = queue.poll();
 		int timeToSleep = msg.getDuration();
-		// prepare
-		counter.setDelay(timeToSleep * SECOND);
 		// set text and display it
 		message.setText(msg.getText());
 		SwingUtilities.invokeLater(new Runnable()
@@ -90,18 +90,30 @@ public class TimerControl
 		});
 		// add it to the end of the queue
 		queue.add(msg);
-		// start waiting
-		counter.start();
+		// schedule and start
+		timer.schedule(task, timeToSleep, TimeUnit.SECONDS);
+		System.out.println("Display message |" + msg.getText() + "| for " +
+								   "|" + timeToSleep + "| seconds");
 	}
 
 	private void waitForNextMessage()
 	{
 		// see how long we have to wait
 		int timeToSleep = queue.peek().getTime() - time;
-		// prepare
-		counter.setDelay(timeToSleep * MINUTE);
-		// start waiting
-		counter.start();
+		// schedule and start
+		timer.schedule(task, timeToSleep, TimeUnit.MINUTES);
+
+		// see if we have to reset the time because we have breached the end
+		// of the loop
+		if (time > queue.peek().getTime())
+		{
+			time = 0;
+		}
+		else
+		{
+			time += timeToSleep;
+		}
+		System.out.println("Wait for |" + timeToSleep + "| minutes");
 	}
 
 	private boolean shouldWeDisplay()
@@ -112,7 +124,7 @@ public class TimerControl
 
 	private void close()
 	{
-		counter.stop();
+		timer.shutdown();
 		message.dispose();
 	}
 }
