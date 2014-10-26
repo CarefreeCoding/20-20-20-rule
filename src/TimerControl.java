@@ -14,8 +14,8 @@ public class TimerControl
 	private LinkedList<Message> queue;
 
 	private Timer          counter;
-	private int            time;
 	private ActionListener event;
+	private int            time;
 
 	public TimerControl()
 	{
@@ -25,43 +25,43 @@ public class TimerControl
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				stop();
-				if (shouldWeDisplay())
-				{
-					displayMessage();
-				}
-				else
-				{
-					waitForNextMessage();
-				}
+				eventAction();
 			}
 		};
+		counter = new Timer(0, event);
 	}
 
 	public void start(List<MessageInput> messageInputs)
 	{
 		queue = Utils.organizeMessages(messageInputs);
 		time = 0;
-		event.actionPerformed(null);
+		eventAction();
 	}
 
 	public void stop()
 	{
-		if (counter != null)
-		{
-			counter.stop();
-		}
+		counter.stop();
 		SwingUtilities.invokeLater(new Runnable()
 		{
 			@Override
 			public void run()
 			{
-				if (message != null)
-				{
-					message.setVisible(false);
-				}
+				message.setVisible(false);
 			}
 		});
+	}
+
+	private void eventAction()
+	{
+		stop();
+		if (shouldWeDisplay())
+		{
+			displayMessage();
+		}
+		else
+		{
+			waitForNextMessage();
+		}
 	}
 
 	private void displayMessage()
@@ -70,7 +70,7 @@ public class TimerControl
 		Message msg = queue.poll();
 		int timeToSleep = msg.getDuration();
 		// prepare
-		counter = new Timer(timeToSleep * SECOND, event);
+		counter.setDelay(timeToSleep * SECOND);
 		// set text and display it
 		message.setText(msg.getText());
 		SwingUtilities.invokeLater(new Runnable()
@@ -92,7 +92,7 @@ public class TimerControl
 		// see how long we have to wait
 		int timeToSleep = timeToSleep();
 		// prepare
-		counter = new Timer(timeToSleep * MINUTE, event);
+		counter.setDelay(timeToSleep * MINUTE);
 		// start waiting
 		counter.start();
 	}
@@ -106,5 +106,11 @@ public class TimerControl
 	private boolean shouldWeDisplay()
 	{
 		return timeToSleep() == 0;
+	}
+
+	private void close()
+	{
+		message.dispose();
+		counter.stop();
 	}
 }
