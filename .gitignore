@@ -71,3 +71,4 @@ out/production/
 
 # Include layout library
 !libs/*
+!release/*
