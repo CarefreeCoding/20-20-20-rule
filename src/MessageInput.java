@@ -74,4 +74,15 @@ public class MessageInput extends JPanel
 		frequencySpinner.setEnabled(value);
 		durationSpinner.setEnabled(value);
 	}
+
+	public String toString()
+	{
+		String string = "{";
+		string += "\"enabled\": " + isEnabled() + ", ";
+		string += "\"text\": \"" + getText() + "\", ";
+		string += "\"frequency\": " + getFrequency() + ", ";
+		string += "\"duration\": " + getDuration() + " ";
+		string += "}";
+		return string;
+	}
 }
