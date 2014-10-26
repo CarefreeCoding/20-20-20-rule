@@ -13,14 +13,13 @@ public class TimerControl
 
 	private LinkedList<Message> queue;
 
-	private Timer          counter;
-	private ActionListener event;
-	private int            time;
+	private Timer counter;
+	private int   time;
 
 	public TimerControl()
 	{
 		message = new InvisibleWindow();
-		event = new ActionListener()
+		ActionListener event = new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -29,6 +28,27 @@ public class TimerControl
 			}
 		};
 		counter = new Timer(0, event);
+	}
+
+	private void eventAction()
+	{
+		stop();
+		if (shouldWeDisplay())
+		{
+			displayMessage();
+		}
+		else
+		{
+			waitForNextMessage();
+			if (time > queue.peek().getTime())
+			{
+				time = 0;
+			}
+			else
+			{
+				time += counter.getDelay() / MINUTE;
+			}
+		}
 	}
 
 	public void start(List<MessageInput> messageInputs)
@@ -46,22 +66,9 @@ public class TimerControl
 			@Override
 			public void run()
 			{
-				message.setVisible(false);
+				message.remove();
 			}
 		});
-	}
-
-	private void eventAction()
-	{
-		stop();
-		if (shouldWeDisplay())
-		{
-			displayMessage();
-		}
-		else
-		{
-			waitForNextMessage();
-		}
 	}
 
 	private void displayMessage()
@@ -78,11 +85,11 @@ public class TimerControl
 			@Override
 			public void run()
 			{
-				message.setVisible(true);
+				message.popup();
 			}
 		});
 		// add it to the end of the queue
-		queue.push(msg);
+		queue.add(msg);
 		// start waiting
 		counter.start();
 	}
@@ -90,27 +97,22 @@ public class TimerControl
 	private void waitForNextMessage()
 	{
 		// see how long we have to wait
-		int timeToSleep = timeToSleep();
+		int timeToSleep = queue.peek().getTime() - time;
 		// prepare
 		counter.setDelay(timeToSleep * MINUTE);
 		// start waiting
 		counter.start();
 	}
 
-	private int timeToSleep()
-	{
-		int frequency = queue.peek().getFrequency();
-		return frequency - (time % frequency);
-	}
-
 	private boolean shouldWeDisplay()
 	{
-		return timeToSleep() == 0;
+		int t = queue.peek().getTime();
+		return time == t;
 	}
 
 	private void close()
 	{
-		message.dispose();
 		counter.stop();
+		message.dispose();
 	}
 }
