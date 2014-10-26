@@ -122,7 +122,7 @@ public class TimerControl
 		return time == t;
 	}
 
-	private void close()
+	public void close()
 	{
 		timer.shutdown();
 		message.dispose();
