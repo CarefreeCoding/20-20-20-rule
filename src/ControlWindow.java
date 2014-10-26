@@ -3,6 +3,8 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class ControlWindow extends JFrame
 {
 	private List<MessageInput> messages;
 	private List<JButton>      deletes;
+
+	private TimerControl timer;
 
 	private JPanel  messagePanel;
 	private JButton addNewMessage;
@@ -27,6 +31,8 @@ public class ControlWindow extends JFrame
 
 		messages = new ArrayList<MessageInput>();
 		deletes = new ArrayList<JButton>();
+
+		timer = new TimerControl();
 
 		messagePanel = new JPanel();
 		messagePanel.setLayout(new MigLayout("wrap 2, gapy 10"));
@@ -71,6 +77,15 @@ public class ControlWindow extends JFrame
 		add(stop);
 
 		pack();
+
+		addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				timer.close();
+			}
+		});
 	}
 
 	private void addNewMessageInput()
@@ -147,6 +162,8 @@ public class ControlWindow extends JFrame
 		addNewMessage.setEnabled(false);
 		start.setEnabled(false);
 		stop.setEnabled(true);
+
+		timer.start(messages);
 	}
 
 	private void stop()
@@ -162,5 +179,7 @@ public class ControlWindow extends JFrame
 		addNewMessage.setEnabled(true);
 		start.setEnabled(true);
 		stop.setEnabled(false);
+
+		timer.stop();
 	}
 }
