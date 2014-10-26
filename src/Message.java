@@ -1,7 +1,7 @@
 public class Message
 {
 	private String text;
-	private int    frequency;
+	private int    time;
 	private int    duration;
 
 	public Message()
@@ -14,15 +14,15 @@ public class Message
 		this(text, -1);
 	}
 
-	public Message(String text, int frequency)
+	public Message(String text, int time)
 	{
-		this(text, frequency, -1);
+		this(text, time, -1);
 	}
 
-	public Message(String text, int frequency, int duration)
+	public Message(String text, int time, int duration)
 	{
 		setText(text);
-		setFrequency(frequency);
+		setTime(time);
 		setDuration(duration);
 	}
 
@@ -36,14 +36,14 @@ public class Message
 		this.text = text;
 	}
 
-	public int getFrequency()
+	public int getTime()
 	{
-		return frequency;
+		return time;
 	}
 
-	public void setFrequency(int frequency)
+	public void setTime(int time)
 	{
-		this.frequency = frequency;
+		this.time = time;
 	}
 
 	public int getDuration()
@@ -61,7 +61,7 @@ public class Message
 	{
 		String string = "{";
 		string += "\"text\": \"" + getText() + "\", ";
-		string += "\"frequency\": " + getFrequency() + ", ";
+		string += "\"time\": " + getTime() + ", ";
 		string += "\"duration\": " + getDuration() + " ";
 		string += "}";
 		return string;
@@ -74,7 +74,7 @@ public class Message
 		{
 			Message message = (Message) obj;
 			return getText().equalsIgnoreCase(message.getText()) &&
-					getFrequency() == message.getFrequency() &&
+					getTime() == message.getTime() &&
 					getDuration() == message.getDuration();
 		}
 		return false;
@@ -83,13 +83,13 @@ public class Message
 	@Override
 	public Message clone()
 	{
-		return new Message(getText(), getFrequency(), getDuration());
+		return new Message(getText(), getTime(), getDuration());
 	}
 
 	public void update(Message message)
 	{
 		setText(message.getText());
-		setFrequency(message.getFrequency());
+		setTime(message.getTime());
 		setDuration(message.getDuration());
 	}
 }
