@@ -76,7 +76,7 @@ public class Utils
 		}
 
 		LinkedList<Message> messages = new LinkedList<Message>();
-		for (int i = 1; i <= maxLoop; i += stepSize)
+		for (int i = stepSize; i <= maxLoop; i += stepSize)
 		{
 			for (MessageInput input : messageInputs)
 			{
@@ -84,7 +84,7 @@ public class Utils
 				{
 					continue;
 				}
-				if (1 % input.getFrequency() == 0)
+				if (i % input.getFrequency() == 0)
 				{
 					messages.add(input.getMessage());
 				}
