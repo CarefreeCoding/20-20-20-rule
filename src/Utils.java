@@ -86,7 +86,9 @@ public class Utils
 				}
 				if (i % input.getFrequency() == 0)
 				{
-					messages.add(input.getMessage());
+					Message message = input.getMessage();
+					message.setTime(i);
+					messages.add(message);
 				}
 			}
 		}
