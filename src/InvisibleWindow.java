@@ -54,6 +54,7 @@ public class InvisibleWindow extends JFrame
 
 	public void popup()
 	{
+		pack();
 		setAlwaysOnTop(true);
 		setVisible(true);
 		requestFocus();

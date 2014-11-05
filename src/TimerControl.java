@@ -77,19 +77,14 @@ public class TimerControl
 	{
 		// get the message we will display
 		Message msg = queue.poll();
-		int timeToSleep = msg.getDuration();
-		// set text and display it
+		// set text
 		message.setText(msg.getText());
-		SwingUtilities.invokeLater(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				message.popup();
-			}
-		});
+		// find out duration of wait
+		int timeToSleep = msg.getDuration();
 		// add it to the end of the queue
 		queue.add(msg);
+		// display it
+		message.popup();
 		// schedule and start
 		timer.schedule(task, timeToSleep, TimeUnit.SECONDS);
 		System.out.println("Display message |" + msg.getText() + "| for " +
