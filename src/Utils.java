@@ -86,7 +86,7 @@ public class Utils
 				}
 				if (i % input.getFrequency() == 0)
 				{
-					Message message = input.getMessage();
+					Message message = input.toMessage();
 					message.setFrequency(i);
 					messages.add(message);
 				}

@@ -68,11 +68,6 @@ public class MessageInput extends JPanel
 		return Integer.valueOf(String.valueOf(durationSpinner.getValue()));
 	}
 
-	public Message getMessage()
-	{
-		return new Message(getText(), getFrequency(), getDuration());
-	}
-
 	public void enable()
 	{
 		setEnabled(true);
@@ -102,7 +97,12 @@ public class MessageInput extends JPanel
 		return string;
 	}
 
-	public void fromString(String json)
+	public String toJSON()
+	{
+		return this.toString();
+	}
+
+	public void fromJSON(String json)
 	{
 		enabled.setEnabled(Boolean.valueOf(Utils.extractValue(json, ENABLED)));
 		message.setText(Utils.extractValue(json, TEXT));
@@ -110,6 +110,11 @@ public class MessageInput extends JPanel
 				Integer.valueOf(Utils.extractValue(json, FREQUENCY)));
 		durationSpinner.setValue(
 				Integer.valueOf(Utils.extractValue(json, DURATION)));
+	}
+
+	public Message toMessage()
+	{
+		return new Message(getText(), getFrequency(), getDuration());
 	}
 
 	public void fromMessage(Message msg)

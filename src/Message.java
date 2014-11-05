@@ -98,10 +98,27 @@ public class Message
 		setDuration(message.getDuration());
 	}
 
-	public void fromString(String message)
+	public String toJSON()
+	{
+		return this.toString();
+	}
+
+	public void fromJSON(String message)
 	{
 		setText(Utils.extractValue(message, TEXT));
 		setFrequency(Integer.valueOf(Utils.extractValue(message, FREQUENCY)));
 		setDuration(Integer.valueOf(Utils.extractValue(message, DURATION)));
+	}
+
+	public MessageInput toMessageInput()
+	{
+		MessageInput input = new MessageInput();
+		input.fromJSON(this.toJSON());
+		return input;
+	}
+
+	public void fromMessageInput(MessageInput input)
+	{
+		fromJSON(input.toString());
 	}
 }
