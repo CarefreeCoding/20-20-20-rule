@@ -1,6 +1,8 @@
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class MessageInput extends JPanel
 {
@@ -36,6 +38,14 @@ public class MessageInput extends JPanel
 		add(new JLabel(" seconds "));
 
 		enabled.setSelected(true);
+		message.addFocusListener(new FocusAdapter()
+		{
+			@Override
+			public void focusGained(FocusEvent e)
+			{
+				message.selectAll();
+			}
+		});
 	}
 
 	public boolean isEnabled()
