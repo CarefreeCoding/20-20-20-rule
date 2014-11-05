@@ -40,6 +40,9 @@ public class InvisibleWindow extends JFrame
 		add(panel);
 		pack();
 		setLocation(0, 0);
+		setFocusable(false);
+		setAutoRequestFocus(false);
+		setFocusableWindowState(false);
 	}
 
 	public JLabel getLabel()
