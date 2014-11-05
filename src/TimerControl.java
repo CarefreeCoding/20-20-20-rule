@@ -94,13 +94,13 @@ public class TimerControl
 	private void waitForNextMessage()
 	{
 		// see how long we have to wait
-		int timeToSleep = queue.peek().getTime() - time;
+		int timeToSleep = queue.peek().getFrequency() - time;
 		// schedule and start
 		timer.schedule(task, timeToSleep, TimeUnit.MINUTES);
 
 		// see if we have to reset the time because we have breached the end
 		// of the loop
-		if (time > queue.peek().getTime())
+		if (time > queue.peek().getFrequency())
 		{
 			time = 0;
 		}
@@ -113,7 +113,7 @@ public class TimerControl
 
 	private boolean shouldWeDisplay()
 	{
-		int t = queue.peek().getTime();
+		int t = queue.peek().getFrequency();
 		return time == t;
 	}
 

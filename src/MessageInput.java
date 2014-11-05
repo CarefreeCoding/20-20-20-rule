@@ -116,7 +116,7 @@ public class MessageInput extends JPanel
 	{
 		enabled.setEnabled(true);
 		message.setText(msg.getText());
-		frequencySpinner.setValue(msg.getTime());
+		frequencySpinner.setValue(msg.getFrequency());
 		durationSpinner.setValue(msg.getDuration());
 	}
 }

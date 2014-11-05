@@ -1,11 +1,11 @@
 public class Message
 {
-	public static final String TEXT     = "text";
-	public static final String TIME     = "time";
-	public static final String DURATION = "duration";
+	public static final String TEXT      = "text";
+	public static final String FREQUENCY = "frequency";
+	public static final String DURATION  = "duration";
 
 	private String text;
-	private int    time;
+	private int    frequency;
 	private int    duration;
 
 	public Message()
@@ -18,15 +18,15 @@ public class Message
 		this(text, -1);
 	}
 
-	public Message(String text, int time)
+	public Message(String text, int frequency)
 	{
-		this(text, time, -1);
+		this(text, frequency, -1);
 	}
 
-	public Message(String text, int time, int duration)
+	public Message(String text, int frequency, int duration)
 	{
 		setText(text);
-		setTime(time);
+		setFrequency(frequency);
 		setDuration(duration);
 	}
 
@@ -40,14 +40,14 @@ public class Message
 		this.text = text;
 	}
 
-	public int getTime()
+	public int getFrequency()
 	{
-		return time;
+		return frequency;
 	}
 
-	public void setTime(int time)
+	public void setFrequency(int frequency)
 	{
-		this.time = time;
+		this.frequency = frequency;
 	}
 
 	public int getDuration()
@@ -65,7 +65,7 @@ public class Message
 	{
 		String string = "{";
 		string += "\"" + TEXT + "\": \"" + getText() + "\", ";
-		string += "\"" + TIME + "\": " + getTime() + ", ";
+		string += "\"" + FREQUENCY + "\": " + getFrequency() + ", ";
 		string += "\"" + DURATION + "\": " + getDuration() + " ";
 		string += "}";
 		return string;
@@ -78,29 +78,30 @@ public class Message
 		{
 			Message message = (Message) obj;
 			return getText().equalsIgnoreCase(message.getText()) &&
-					getTime() == message.getTime() &&
+					getFrequency() == message.getFrequency() &&
 					getDuration() == message.getDuration();
 		}
 		return false;
 	}
 
 	@Override
-	public Message clone()
+	public Message clone() throws CloneNotSupportedException
 	{
-		return new Message(getText(), getTime(), getDuration());
+		super.clone();
+		return new Message(getText(), getFrequency(), getDuration());
 	}
 
 	public void update(Message message)
 	{
 		setText(message.getText());
-		setTime(message.getTime());
+		setFrequency(message.getFrequency());
 		setDuration(message.getDuration());
 	}
 
 	public void fromString(String message)
 	{
 		setText(Utils.extractValue(message, TEXT));
-		setTime(Integer.valueOf(Utils.extractValue(message, TIME)));
+		setFrequency(Integer.valueOf(Utils.extractValue(message, FREQUENCY)));
 		setDuration(Integer.valueOf(Utils.extractValue(message, DURATION)));
 	}
 }
