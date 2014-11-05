@@ -27,7 +27,7 @@ public class ControlWindow extends JFrame
 		super("Controls");
 
 		instance = this;
-		setLayout(new MigLayout("wrap 3, gapy 10"));
+		setLayout(new MigLayout("wrap 4, gapy 10"));
 
 		messages = new ArrayList<MessageInput>();
 		deletes = new ArrayList<JButton>();
@@ -71,10 +71,11 @@ public class ControlWindow extends JFrame
 			}
 		});
 
-		add(messagePanel, "span 3");
+		add(messagePanel, "span 4");
 		add(addNewMessage);
 		add(start);
 		add(stop);
+		add(new JLabel("V: " + Constants.VERSION), "alignx right");
 
 		pack();
 
