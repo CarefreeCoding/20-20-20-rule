@@ -4,6 +4,11 @@ import javax.swing.*;
 
 public class MessageInput extends JPanel
 {
+	public static final String ENABLED   = "enabled";
+	public static final String TEXT      = "text";
+	public static final String FREQUENCY = "frequency";
+	public static final String DURATION  = "duration";
+
 	private JCheckBox  enabled;
 	private JTextField message;
 	private JSpinner   frequencySpinner;
@@ -79,11 +84,29 @@ public class MessageInput extends JPanel
 	public String toString()
 	{
 		String string = "{";
-		string += "\"enabled\": " + isEnabled() + ", ";
-		string += "\"text\": \"" + getText() + "\", ";
-		string += "\"frequency\": " + getFrequency() + ", ";
-		string += "\"duration\": " + getDuration() + " ";
+		string += "\"" + ENABLED + "\": " + isEnabled() + ", ";
+		string += "\"" + TEXT + "\": \"" + getText() + "\", ";
+		string += "\"" + FREQUENCY + "\": " + getFrequency() + ", ";
+		string += "\"" + DURATION + "\": " + getDuration() + " ";
 		string += "}";
 		return string;
+	}
+
+	public void fromString(String json)
+	{
+		enabled.setEnabled(Boolean.valueOf(Utils.extractValue(json, ENABLED)));
+		message.setText(Utils.extractValue(json, TEXT));
+		frequencySpinner.setValue(
+				Integer.valueOf(Utils.extractValue(json, FREQUENCY)));
+		durationSpinner.setValue(
+				Integer.valueOf(Utils.extractValue(json, DURATION)));
+	}
+
+	public void fromMessage(Message msg)
+	{
+		enabled.setEnabled(true);
+		message.setText(msg.getText());
+		frequencySpinner.setValue(msg.getTime());
+		durationSpinner.setValue(msg.getDuration());
 	}
 }

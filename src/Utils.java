@@ -94,4 +94,33 @@ public class Utils
 		}
 		return messages;
 	}
+
+	public static String extractValue(String json, String variable)
+	{
+		int index = json.indexOf(variable);
+		if (index == -1)
+		{
+			return "";
+		}
+		int start = json.indexOf(":", index);
+		if (start == -1)
+		{
+			return "";
+		}
+		start++;
+		int end = json.indexOf(",", start);
+		int veryEnd = json.indexOf("}");
+		if (end == -1 || veryEnd < end)
+		{
+			end = veryEnd;
+		}
+		String response = json.substring(start, end);
+		response = response.trim();
+		if (response.charAt(0) == '\"')
+		{
+			response = response.substring(1, response.length() - 1);
+		}
+
+		return response;
+	}
 }

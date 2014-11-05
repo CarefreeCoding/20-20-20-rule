@@ -1,5 +1,9 @@
 public class Message
 {
+	public static final String TEXT     = "text";
+	public static final String TIME     = "time";
+	public static final String DURATION = "duration";
+
 	private String text;
 	private int    time;
 	private int    duration;
@@ -60,9 +64,9 @@ public class Message
 	public String toString()
 	{
 		String string = "{";
-		string += "\"text\": \"" + getText() + "\", ";
-		string += "\"time\": " + getTime() + ", ";
-		string += "\"duration\": " + getDuration() + " ";
+		string += "\"" + TEXT + "\": \"" + getText() + "\", ";
+		string += "\"" + TIME + "\": " + getTime() + ", ";
+		string += "\"" + DURATION + "\": " + getDuration() + " ";
 		string += "}";
 		return string;
 	}
@@ -91,5 +95,12 @@ public class Message
 		setText(message.getText());
 		setTime(message.getTime());
 		setDuration(message.getDuration());
+	}
+
+	public void fromString(String message)
+	{
+		setText(Utils.extractValue(message, TEXT));
+		setTime(Integer.valueOf(Utils.extractValue(message, TIME)));
+		setDuration(Integer.valueOf(Utils.extractValue(message, DURATION)));
 	}
 }
