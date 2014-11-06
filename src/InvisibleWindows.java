@@ -6,15 +6,25 @@ public class InvisibleWindows
 {
 	private List<InvisibleWindow> windows;
 
+	private int mainScreenIndex;
+
 	public InvisibleWindows()
 	{
+		mainScreenIndex = 0;
+		GraphicsDevice mainScreen =
+				GraphicsEnvironment.getLocalGraphicsEnvironment()
+								   .getDefaultScreenDevice();
 		GraphicsDevice[] screens = GraphicsEnvironment
 				.getLocalGraphicsEnvironment().getScreenDevices();
 
 		windows = new ArrayList<InvisibleWindow>();
-		for (GraphicsDevice screen : screens)
+		for (int i = 0; i < screens.length; i++)
 		{
-			windows.add(new InvisibleWindow(screen));
+			windows.add(new InvisibleWindow(screens[i]));
+			if (screens[i] == mainScreen)
+			{
+				mainScreenIndex = i;
+			}
 		}
 	}
 
