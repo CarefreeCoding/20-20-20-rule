@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class InvisibleWindow extends JFrame
+public class InvisibleWindow extends JDialog
 {
 	private JLabel label;
 
@@ -13,12 +13,14 @@ public class InvisibleWindow extends JFrame
 
 	public InvisibleWindow(GraphicsDevice device)
 	{
-		int width = device.getDisplayMode().getWidth();
-		int height = device.getDisplayMode().getHeight();
-		Dimension size = new Dimension(width, height);
+		Point location =
+				device.getDefaultConfiguration().getBounds().getLocation();
+		Dimension size =
+				device.getDefaultConfiguration().getBounds().getSize();
 
 		label = new JLabel();
-		label.setFont(label.getFont().deriveFont(Font.BOLD, width / 8));
+		label.setFont(label.getFont().deriveFont(Font.BOLD,
+												 (int) size.getWidth() / 8));
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -34,11 +36,11 @@ public class InvisibleWindow extends JFrame
 		setMaximumSize(size);
 		setMinimumSize(size);
 		setPreferredSize(size);
+		setLocation(location);
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0));
 		add(panel);
 		pack();
-		setLocation(0, 0);
 		setFocusable(false);
 		setAutoRequestFocus(false);
 		setFocusableWindowState(false);
