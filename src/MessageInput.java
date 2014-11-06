@@ -68,14 +68,9 @@ public class MessageInput extends JPanel
 		return Integer.valueOf(String.valueOf(durationSpinner.getValue()));
 	}
 
-	public void enable()
+	public void allowChanges(boolean enabled)
 	{
-		setEnabled(true);
-	}
-
-	public void disable()
-	{
-		setEnabled(false);
+		setEnabled(enabled);
 	}
 
 	public void setEnabled(boolean value)

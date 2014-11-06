@@ -7,18 +7,17 @@ public class InvisibleWindow extends JFrame
 
 	public InvisibleWindow()
 	{
-		this("");
+		this(GraphicsEnvironment.getLocalGraphicsEnvironment()
+								.getDefaultScreenDevice());
 	}
 
-	public InvisibleWindow(String text)
+	public InvisibleWindow(GraphicsDevice device)
 	{
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment()
-											   .getDefaultScreenDevice();
-		int width = gd.getDisplayMode().getWidth();
-		int height = gd.getDisplayMode().getHeight();
+		int width = device.getDisplayMode().getWidth();
+		int height = device.getDisplayMode().getHeight();
 		Dimension size = new Dimension(width, height);
 
-		label = new JLabel(text);
+		label = new JLabel();
 		label.setFont(label.getFont().deriveFont(Font.BOLD, width / 8));
 
 		JPanel panel = new JPanel();
@@ -52,7 +51,7 @@ public class InvisibleWindow extends JFrame
 
 	public void setText(String text)
 	{
-		getLabel().setText(text);
+		getLabel().setText("<html><p>" + text + "</p></html>");
 	}
 
 	public void popup()

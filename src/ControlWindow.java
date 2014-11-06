@@ -154,7 +154,7 @@ public class ControlWindow extends JFrame
 	{
 		for (MessageInput input : messages)
 		{
-			input.disable();
+			input.allowChanges(false);
 		}
 		for (JButton delete : deletes)
 		{
@@ -171,7 +171,7 @@ public class ControlWindow extends JFrame
 	{
 		for (MessageInput input : messages)
 		{
-			input.enable();
+			input.allowChanges(true);
 		}
 		for (JButton delete : deletes)
 		{

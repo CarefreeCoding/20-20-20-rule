@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TimerControl
 {
-	private InvisibleWindow message;
+	private InvisibleWindows message;
 
 	private LinkedList<Message> queue;
 
@@ -18,7 +18,7 @@ public class TimerControl
 
 	public TimerControl()
 	{
-		message = new InvisibleWindow();
+		message = new InvisibleWindows();
 
 		task = new Runnable()
 		{
@@ -68,7 +68,7 @@ public class TimerControl
 			@Override
 			public void run()
 			{
-				message.remove();
+				message.hide();
 			}
 		});
 	}
@@ -84,7 +84,7 @@ public class TimerControl
 		// add it to the end of the queue
 		queue.add(msg);
 		// display it
-		message.popup();
+		message.show();
 		// schedule and start
 		timer.schedule(task, timeToSleep, TimeUnit.SECONDS);
 		System.out.println("Display message |" + msg.getText() + "| for " +
