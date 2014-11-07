@@ -1,3 +1,5 @@
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,17 +23,9 @@ public class InvisibleWindow extends JDialog
 		label = new JLabel();
 		label.setFont(label.getFont().deriveFont(Font.BOLD,
 												 (int) size.getWidth() / 8));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
-		panel.setSize(size);
-		panel.setMaximumSize(size);
-		panel.setMinimumSize(size);
-		panel.setPreferredSize(size);
-		panel.setOpaque(false);
-
-		panel.add(label);
-
+		setLayout(new MigLayout("wrap 1"));
 		setSize(size);
 		setMaximumSize(size);
 		setMinimumSize(size);
@@ -39,7 +33,7 @@ public class InvisibleWindow extends JDialog
 		setLocation(location);
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0));
-		add(panel);
+		add(label, "dock center");
 		pack();
 		setFocusable(false);
 		setAutoRequestFocus(false);
