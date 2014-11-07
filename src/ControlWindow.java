@@ -71,6 +71,10 @@ public class ControlWindow extends JFrame
 			}
 		});
 
+		MessageInput input = new MessageInput();
+		messages.add(input);
+		messagePanel.add(messages.get(messages.size() - 1), "span 2");
+
 		add(messagePanel, "span 4");
 		add(addNewMessage);
 		add(start);
