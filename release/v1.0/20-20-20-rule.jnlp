@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp
+	codebase="https://github.com/CarefreeCoding/20-20-20-rule/raw/release/release/v1.0"
+	href="20-20-20-rule.jnlp" spec="1.0+">
+	<information>
+		<title>20 20 20 Rule</title>
+		<vendor>CarefreeCoding</vendor>
+	</information>
+	<resources>
+		<!-- Application Resources -->
+		<j2se href="http://java.sun.com/products/autodl/j2se" version="1.7+" />
+		<jar
+			href="https://github.com/CarefreeCoding/20-20-20-rule/raw/release/release/v1.0/20-20-20-rule.jar"
+			main="true" />
+
+	</resources>
+	<application-desc name="20 20 20 Rule" height="300" main-class="Main"
+		width="300">
+		A application to remind
+	</application-desc>
+	<update check="background" />
+</jnlp>
