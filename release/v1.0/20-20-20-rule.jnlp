@@ -5,18 +5,27 @@
 	<information>
 		<title>20 20 20 Rule</title>
 		<vendor>CarefreeCoding</vendor>
+		<homepage href="http://www.carefreecoding.ca/" />
+		<description>An application to remind</description>
+		<offline-allowed />
+		<desktop />
 	</information>
+	<security>
+		<all-permissions />
+	</security>
 	<resources>
 		<!-- Application Resources -->
 		<j2se href="http://java.sun.com/products/autodl/j2se" version="1.7+" />
 		<jar
 			href="https://github.com/CarefreeCoding/20-20-20-rule/raw/release/release/v1.0/20-20-20-rule.jar"
 			main="true" />
-
 	</resources>
+	<java>
+		<version>1.7+</version>
+	</java>
 	<application-desc name="20 20 20 Rule" height="300" main-class="Main"
 		width="300">
-		A application to remind
+		An application to remind
 	</application-desc>
 	<update check="background" />
 </jnlp>
